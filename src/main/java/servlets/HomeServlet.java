@@ -8,7 +8,7 @@ import org.apache.tomcat.util.net.AbstractEndpoint.Handler;
 import beans.HighPriorityHandler;
 import beans.LowPriorityHandler;
 import beans.MediumPriorityHandler;
-import beans.TaskProxy;
+import beans.Task;
 import beans.User;
 
 import javax.servlet.annotation.*;
@@ -82,7 +82,7 @@ public class HomeServlet extends HttpServlet {
 
 
         String action = request.getParameter("action");
-        String task_id = request.getParameter("sup_task");
+        long task_id = Long.parseLong(request.getParameter("sup_task"));
         String high_pr_btn = request.getParameter("high-pr-btn");
 
 
@@ -112,29 +112,13 @@ public class HomeServlet extends HttpServlet {
                 
             } else if (action.equals("Suppression")) {
                 System.out.println("supp3");
-                TaskProxy supp=new TaskProxy();
-                alert = supp.supprimer(task_id);
-                System.out.println(alert);
+                Task supp=new Task();
+                supp.supprimer(task_id);
+        
                 System.out.println("supp3");
-                if (alert == true) {
-                    boolean afficherelement = true;
-
-                    // Stockage du code HTML dans l'objet de requête
-                    request.setAttribute("afficherelement",afficherelement);
-
-                    // Redirection de la requête vers la page JSP
-                    response.sendRedirect("HomeServlet");
-                } else{
-                    supp.supprimer(task_id);
-                    response.sendRedirect("HomeServlet");
-
-                }
+           
             }
-          else if(action.equals("Suppression-high")){
-              TaskProxy supp=new TaskProxy();
-            supp.supprimer(high_pr_btn);
-              response.sendRedirect("HomeServlet");
-          }
+        
 
 
         } catch (Exception e) {

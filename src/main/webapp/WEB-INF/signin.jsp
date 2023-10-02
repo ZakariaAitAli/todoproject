@@ -268,8 +268,8 @@
         <!-- <a class="logo-text" href="index.html">Name</a> -->
         <nav>
             <ul >
-                <li><a href="/LoginServlet">Se connecter</a></li>
-                <li><a href="/SigninServlet">S'inscrire</a></li>
+                <li><a href="LoginServlet">Se connecter</a></li>
+                <li><a href="SigninServlet">S'inscrire</a></li>
             </ul>
         </nav>
     </div> <!-- end of container -->

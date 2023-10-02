@@ -2,12 +2,12 @@ package beans;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
 public class Task implements UserTask{
     private String name;
-    private String priority;
     private String desc_task;
     private Date dueDate;
     private String title;
@@ -17,10 +17,7 @@ public class Task implements UserTask{
         return title;
     }
 
-    public void setPriority(String priority) {
-        this.priority = priority;
-    }
-
+   
     public String getDesc_task() {
         return desc_task;
     }
@@ -49,18 +46,18 @@ public class Task implements UserTask{
     public Task() {
     }
 
-    public Task(String title, String priority, String desc_task, Date dueDate, String email) {
+    public Task(String title, String desc_task, Date dueDate, String email) {
         this.title = title;
-        this.priority = priority;
+        
         this.email=email;
 
         this.desc_task=desc_task;
         this.dueDate=dueDate;
 
     }
-    public Task(String title, String priority, String desc_task, Date dueDate) {
+    public Task(String title,  String desc_task, Date dueDate) {
         this.title = title;
-        this.priority = priority;
+        
         this.desc_task=desc_task;
         this.dueDate=dueDate;
 
@@ -74,9 +71,7 @@ public class Task implements UserTask{
         return name;
     }
 
-    public String getPriority() {
-        return priority;
-    }
+  
 
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
@@ -88,21 +83,39 @@ public class Task implements UserTask{
 
 
 
-    @Override
-    public boolean supprimer(String task_id) {
+//    @Override
+//    public boolean supprimer(String task_id) {
+//        try {
+//            Connection con = Uticonnexion.seConecter();
+//            System.out.println(task_id);
+//            PreparedStatement stmt = con.prepareStatement("DELETE FROM task WHERE task_id=?");
+//            stmt.setString(1, task_id);
+//            stmt.executeUpdate();
+//            System.out.println("suppression ok");
+//            return false;
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+    public void supprimer(long task_id) {
+
         try {
+
             Connection con = Uticonnexion.seConecter();
-            System.out.println(task_id);
-            PreparedStatement stmt = con.prepareStatement("DELETE FROM task WHERE task_id=?");
-            stmt.setString(1, task_id);
+            PreparedStatement stmt = con.prepareStatement("delete * FROM task WHERE task_id=?");
             stmt.executeUpdate();
-            System.out.println("suppression ok");
-            return false;
+            
+                System.out.println("entré");
+              
+            
+
+
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
 
+ }
 
 }
 

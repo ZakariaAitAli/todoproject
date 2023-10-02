@@ -374,7 +374,6 @@
                     <span class="title" id="title<%=value_info[3]%>" onclick="updateTitle(<%=value_info[3]%>)" contenteditable="true"><%=value_info[1]%></span>
                     <span style="font-size:large; font-weight: normal" id="description<%=value_info[3]%>" onclick="updatedescription(<%=value_info[3]%>)" contenteditable="true"><%=value_info[0]%></span>
 
-                    <span class="highlighted"><%=value_info[4]%></span>
                 </div>
             </div>
 
@@ -405,7 +404,7 @@
             var postData = {
                 task_id: task_id,
             };
-            $.post('/DeleteTaskServlet', postData, function(data) {
+            $.post('DeleteTaskServlet', postData, function(data) {
                 if (data == "error"){
                     console.log("High");
                     /* document.getElementById("error").innerHTML = alert('<div class="alert aler-danger">' +

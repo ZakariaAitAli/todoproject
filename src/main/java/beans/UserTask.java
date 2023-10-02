@@ -2,5 +2,5 @@ package beans;
 
 public interface UserTask {
 
-     boolean supprimer(String task_id);
+     void supprimer(long task_id);
 }

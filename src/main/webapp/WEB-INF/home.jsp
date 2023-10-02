@@ -338,7 +338,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark shadow-5-strong">
     <a style="margin-left: 100px"  class="navbar-brand" href="index.jsp"><span style="color: #5e9693;">MY</span><span style="color: #fff;">TODO</span></a>
         <span style="margin-left: 1000px" class="navbar-text">
-            <a href="/LogOutServlet">
+            <a href="LogOutServlet">
        déconnexion
                 </a>
     </span>
@@ -360,19 +360,21 @@
         <div class="todo__list" >
             <div>
                 <span  class="title_container" ><%=key%>      <button  type="button" class="rounded-3 nv-boutton-pen"  data-bs-toggle="modal" data-bs-target="#editercontainer<%=key%>" name="editer_task"><i style="width: 10px; background: none!important;" class="bi bi-pen"></i>
-                    <form method="post" action="/DeleteContainerServlet"><button style=" margin-right: 5px!important; background:  #e2e4e6; border-color:  #e2e4e6; border:  #e2e4e6" class="rounded-3 trash_container" value="<%=key%>" name="delete_container"><i style="width: 10px; margin-left: 30px" class="bi bi-trash"></i></button></form>
+                    <form method="post" action="DeleteContainerServlet"><button style=" margin-right: 5px!important; background:  #e2e4e6; border-color:  #e2e4e6; border:  #e2e4e6" class="rounded-3 trash_container" value="<%=key%>" name="delete_container"><i style="width: 10px; margin-left: 30px" class="bi bi-trash"></i></button></form>
 </button> </span>
             </div>
             <%ArrayList<String[]> values = (ArrayList<String[]>) container_task.get(key);
                 for (String[] value_info : values) { %>
             <div class="type-task">
                 <div>
+                <%=value_info[1]%>
                     <%=value_info[2]%>
-                    <button style="width: 40px; margin-left: 10px" class="rounded-3 nv-boutton-trash" onclick="deleteTask(<%=value_info[3]%>)" value="<%=value_info[3]%>"><i style="width: 10px; margin-left: 30px" class="bi bi-trash"></i></button>
-                </div>
+                    <%=value_info[3]%>
+                     <form method="post" action="DeleteTaskServlet"><button  style="width: 40px; margin-left: 10px" class="rounded-3 nv-boutton-trash" value="<%=value_info[2]%>" name="task_id"><i style="width: 10px; margin-left: 30px" class="bi bi-trash"></i></button></form>
+</button>                 </div>
                 <div class="todo_list_item">
-                    <span class="title" id="title<%=value_info[3]%>" onclick="updateTitle(<%=value_info[3]%>)" contenteditable="true"><%=value_info[1]%></span>
-                    <span style="font-size:large; font-weight: normal" id="description<%=value_info[3]%>" onclick="updatedescription(<%=value_info[3]%>)" contenteditable="true"><%=value_info[0]%></span>
+                    <span class="title" id="title<%=value_info[3]%>"  ><%=value_info[1]%></span>
+                    <span style="font-size:large; font-weight: normal" id="description<%=value_info[2]%>"><%=value_info[0]%></span>
 
                     <span class="highlighted"></span>
                 </div>
@@ -398,98 +400,7 @@
 </div>
 
 <div id="html-contenue"></div>
-<script>
-    function deleteTask(task_id){
-        $(document).ready(function() {
-            console.log("kskslslsl : " + task_id);
-            var postData = {
-                task_id: task_id,
-            };
-            $.post('/DeleteTaskServlet', postData, function(data) {
-                if (data == "error"){
-                    console.log("High");
-                    /* document.getElementById("error").innerHTML = alert('<div class="alert aler-danger">' +
-                         ' Attention ! c est une tache eleve</div>' +
-                         '<form method="post" action="/DeletHighTaskServlet"><button name="task_id" value="' + task_id + '">Supprimer quand meme</button></form>');*/
-                    Swal.fire({
-                        title: 'Attention! Taches avec priorité élevée',
-                        text: 'Êtes-vous sûr de vouloir supprimer cette tache? ',
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonText: 'Supprimer',
-                        cancelButtonText: 'Annuler'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            // Effectuez la redirection vers la servlet avec la valeur
-                            window.location.href = "/DeletHighTaskServlet?task_id="+task_id;
-                        }
-                    })
-                }
-                else{
-                    console.log("Not High");
-                    window.location.href = "/HomeServlet";
-                }
-            }, 'text');
 
-        });
-    }
-    function updateTitle(task_id){
-        console.log("test")
-        $(document).ready(function() {
-            console.log("test")
-            console.log(task_id)
-            var title = $("#title"+task_id);
-            title.on('blur', function() {
-                console.log('fff')
-                var newTitle = title.html();
-                console.log(newTitle)
-                $.ajax({
-                    type: 'POST',
-                    url: '/EditerTitleServlet',
-                    data: { title: newTitle,
-                        task_id:task_id},
-                    success: function(response) {
-                        console.log("test")
-                        // La requête a réussi, faites quelque chose ici si nécessaire
-                    },
-                    error: function(xhr, status, error) {
-                        // La requête a échoué, traitez l'erreur ici si nécessaire
-                    }
-                });
-            });
-        });
-    }
-
-    function updatedescription(task_id){
-        console.log("test")
-        $(document).ready(function() {
-            console.log("test")
-            console.log(task_id)
-            var description = $("#description"+task_id);
-            description.on('blur', function() {
-                console.log('fff')
-                var newDescription = description.html();
-                console.log(newDescription)
-                $.ajax({
-                    type: 'POST',
-                    url: '/EditerDescriptionServlet',
-                    data: { description: newDescription,
-                        task_id:task_id},
-                    success: function(response) {
-
-                        console.log("test")
-                        // La requête a réussi, faites quelque chose ici si nécessaire
-                    },
-                    error: function(xhr, status, error) {
-                        // La requête a échoué, traitez l'erreur ici si nécessaire
-                    }
-                });
-            });
-        });
-    }
-
-
-</script>
 <div id="model" >
     <%
         for(Object key :container_task.keySet()){ %>
