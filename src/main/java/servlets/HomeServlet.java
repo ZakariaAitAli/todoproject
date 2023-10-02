@@ -82,8 +82,7 @@ public class HomeServlet extends HttpServlet {
 
 
         String action = request.getParameter("action");
-        long task_id = Long.parseLong(request.getParameter("sup_task"));
-        String high_pr_btn = request.getParameter("high-pr-btn");
+      
 
 
         boolean alert;
@@ -110,15 +109,7 @@ public class HomeServlet extends HttpServlet {
                 user.insetTask(title_task, desc_task, container_title, user_id,dueDate);
                 response.sendRedirect("HomeServlet");
                 
-            } else if (action.equals("Suppression")) {
-                System.out.println("supp3");
-                Task supp=new Task();
-                supp.supprimer(task_id);
-        
-                System.out.println("supp3");
-           
-            }
-        
+            } 
 
 
         } catch (Exception e) {
