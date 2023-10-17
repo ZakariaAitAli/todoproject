@@ -26,7 +26,7 @@ public class User {
 
 
     public HashMap getContainers(int user_id) throws Exception{
-        ArrayList<String[]> all_containers = new ArrayList<String[]>(); // shy haja HashMap
+        ArrayList<String[]> all_containers = new ArrayList<>(); // shy haja HashMap
         HashMap container_task = new HashMap();
         Connection con = Uticonnexion.seConecter();
         ResultSet res_container = con.createStatement().executeQuery("select * from task_container where user_id=" + user_id );
@@ -83,7 +83,7 @@ public class User {
        public ArrayList<String[]> getAllTasks(int user_id) throws Exception{
         // Select fromDb
         //res is the data selected
-    ArrayList<String[]> all_tasks = new ArrayList<String[]>(); ;
+    ArrayList<String[]> all_tasks = new ArrayList<>();
      Connection con = Uticonnexion.seConecter();
      ResultSet res=con.createStatement().executeQuery("select * from task where user_id="+user_id);
       while(res.next()){

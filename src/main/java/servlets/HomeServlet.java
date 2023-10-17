@@ -1,27 +1,19 @@
 package servlets;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-
-import org.apache.tomcat.util.net.AbstractEndpoint.Handler;
-
-import beans.HighPriorityHandler;
-import beans.LowPriorityHandler;
-import beans.MediumPriorityHandler;
-import beans.Task;
-import beans.User;
-
-import javax.servlet.annotation.*;
-
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.security.Key;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.concurrent.Semaphore;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import beans.Task;
+import beans.User;
 
 @WebServlet(name = "HomeServlet", value = "/HomeServlet")
 public class HomeServlet extends HttpServlet {
@@ -33,10 +25,10 @@ public class HomeServlet extends HttpServlet {
         int user_id = (int) session.getAttribute("user_id");
 
 
-    
+
         User user = new User();
         try {
-           
+
             HashMap container_task = user.getContainers(user_id);
             System.out.println("sizeeeee");
             System.out.println(container_task.size());
@@ -53,12 +45,12 @@ public class HomeServlet extends HttpServlet {
                 System.out.println("echoo");
                 ArrayList<String[]> value = (ArrayList<String[]>) container_task.get(key);
                 for (String[] value_info : value) {
-                    ;
+
                     System.out.println(value_info[2]);
                     System.out.println("ok");
                     System.out.println();
                     System.out.println("echoaaaaaaaaaaa");
-                    
+
                 }
             }
             request.setAttribute("container_task", container_task);
@@ -109,16 +101,16 @@ public class HomeServlet extends HttpServlet {
                 System.out.println("ajout");
                 user.insetTask(title_task, desc_task, container_title, user_id,dueDate);
                 response.sendRedirect("HomeServlet");
-                
+
             } else if (action.equals("Suppression")) {
                 System.out.println("supp3");
                 Task supp=new Task();
                 supp.supprimer(task_id);
-        
+
                 System.out.println("supp3");
-           
+
             }
-        
+
 
 
         } catch (Exception e) {

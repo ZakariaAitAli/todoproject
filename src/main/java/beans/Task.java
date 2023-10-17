@@ -2,8 +2,6 @@ package beans;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Date;
 
 public class Task implements UserTask{
@@ -17,7 +15,7 @@ public class Task implements UserTask{
         return title;
     }
 
-   
+
     public String getDesc_task() {
         return desc_task;
     }
@@ -48,7 +46,7 @@ public class Task implements UserTask{
 
     public Task(String title, String desc_task, Date dueDate, String email) {
         this.title = title;
-        
+
         this.email=email;
 
         this.desc_task=desc_task;
@@ -57,7 +55,7 @@ public class Task implements UserTask{
     }
     public Task(String title,  String desc_task, Date dueDate) {
         this.title = title;
-        
+
         this.desc_task=desc_task;
         this.dueDate=dueDate;
 
@@ -71,7 +69,7 @@ public class Task implements UserTask{
         return name;
     }
 
-  
+
 
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
@@ -97,17 +95,18 @@ public class Task implements UserTask{
 //            throw new RuntimeException(e);
 //        }
 //    }
-    public void supprimer(long task_id) {
+    @Override
+	public void supprimer(long task_id) {
 
         try {
 
             Connection con = Uticonnexion.seConecter();
             PreparedStatement stmt = con.prepareStatement("delete * FROM task WHERE task_id=?");
             stmt.executeUpdate();
-            
+
                 System.out.println("entré");
-              
-            
+
+
 
 
 

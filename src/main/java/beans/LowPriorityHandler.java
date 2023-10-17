@@ -1,7 +1,5 @@
 package beans;
 
-import beans.Handler;
-
 public class LowPriorityHandler implements Handler {
     private Handler nextHandler;
     @Override
@@ -9,7 +7,8 @@ public class LowPriorityHandler implements Handler {
         this.nextHandler = nextHandler;
     }
 
-    public String handle(String priority) {
+    @Override
+	public String handle(String priority) {
         String color=null;
         if (priority.equals("LOW")) {
             // Traiter la tâche avec une priorité élevée
@@ -18,7 +17,7 @@ public class LowPriorityHandler implements Handler {
                     "            <i class=\"bi bi-exclamation-lg\"></i>\n" +
                     "            <span style=\"font-weight: bolder; margin-bottom: -2px; margin-left: -4px;\"> Importance : Faible</span>\n" +
                     "        </span>\n" +
-                    "        </span> ";;
+                    "        </span> ";
             return color;
         }
         else{

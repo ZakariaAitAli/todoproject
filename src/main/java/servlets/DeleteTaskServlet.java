@@ -1,17 +1,16 @@
 package servlets;
 
-import beans.Task;
-import beans.Uticonnexion;
-
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
-
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import beans.Uticonnexion;
 
 @WebServlet(name = "DeleteTaskServlet", value = "/DeleteTaskServlet")
 public class DeleteTaskServlet extends HttpServlet {
@@ -27,7 +26,7 @@ public class DeleteTaskServlet extends HttpServlet {
          Connection con;
          try {
              con = Uticonnexion.seConecter();
-             PreparedStatement res = (PreparedStatement) con.prepareStatement("delete from task where task_id=?");
+             PreparedStatement res = con.prepareStatement("delete from task where task_id=?");
              res.setLong(1,task_id);
              res.executeUpdate();
              response.sendRedirect("HomeServlet");
@@ -36,8 +35,8 @@ public class DeleteTaskServlet extends HttpServlet {
              throw new RuntimeException(e);
          }
 
- 
-   
+
+
     	}
     }
 

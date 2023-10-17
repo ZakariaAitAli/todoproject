@@ -1,13 +1,16 @@
 package servlets;
 
-import beans.Uticonnexion;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import beans.Uticonnexion;
 
 @WebServlet(name = "DeleteContainerServlet", value = "/DeleteContainerServlet")
 public class DeleteContainerServlet extends HttpServlet {
@@ -20,7 +23,7 @@ public class DeleteContainerServlet extends HttpServlet {
         Connection con;
         try {
             con = Uticonnexion.seConecter();
-            PreparedStatement res = (PreparedStatement) con.prepareStatement("delete from task_container where container_title=?");
+            PreparedStatement res = con.prepareStatement("delete from task_container where container_title=?");
             res.setString(1,title_container);
             res.executeUpdate();
             response.sendRedirect("HomeServlet");

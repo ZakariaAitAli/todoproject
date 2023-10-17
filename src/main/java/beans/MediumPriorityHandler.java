@@ -1,7 +1,5 @@
 package beans;
 
-import beans.Handler;
-
 public class MediumPriorityHandler implements Handler {
     private Handler nextHandler;
 
@@ -9,7 +7,8 @@ public class MediumPriorityHandler implements Handler {
     public void setNextHandler(Handler nextHandler) {
         this.nextHandler=nextHandler;
     }
-    public String handle(String priority) {
+    @Override
+	public String handle(String priority) {
         String color=null;
         if (priority.equals("MEDIUM")) {
             // Traiter la tâche avec une priorité élevée
